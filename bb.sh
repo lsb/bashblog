@@ -7,7 +7,6 @@
 # https://github.com/carlesfe/bashblog/contributors
 # https://github.com/lsb/bashblog
 
-
 # README
 #
 # This is a minimalist blog system, that asks the user to create a text file,

@@ -3,16 +3,9 @@
 # BashBlog, a simple blog system written in a single bash script
 # Author: Carles Fenollosa <carles.fenollosa@bsc.es>, 2011-2013
 # Author: lsb <hi@leebutterman.com>
-# With contributions from many others: 
-# https://github.com/carlesfe/bashblog/contributors
 # https://github.com/lsb/bashblog
 
 # README
-#
-# This is a minimalist blog system, that asks the user to create a text file,
-# converts it into a .html file, and then rebuilds the index.html and feed.rss.
-#
-# This script is standalone, it doesn't require any other file to run
 #
 # Files that this script generates:
 #	- main.css (inherited from my web page) and blog.css (blog-specific stylesheet)

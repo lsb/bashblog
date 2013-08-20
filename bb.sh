@@ -152,7 +152,7 @@ twitter() {
 
     echo "<p id='twitter'>$template_comments&nbsp;"
 
-    echo "<a href=\"https://twitter.com/share\" class=\"twitter-share-button\" data-text=\"&lt;Type your comment here but please leave the URL so that other people can follow the comments&gt;\" data-url=\"$1\" data-via=\"$global_twitter_username\" $template_twitter_button</a>"
+    echo "<a href=\"https://twitter.com/share\" class=\"twitter-share-button\" data-text=\"&lt;Type your comment here but please leave the URL so that other people can follow the comments&gt;\" data-url=\"$1\" data-via=\"$global_twitter_username\">$template_twitter_button</a>"
     echo "</p>"
 }
 

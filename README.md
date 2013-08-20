@@ -41,9 +41,6 @@ Features
 - Generation of an RSS file! Blog's magic is the RSS file, isn't it...?
 - Generation of a page with all posts, to solve the index.html pagination problem
 - Rebuilding the index files without the need to create a new entry
-- Optional comments, using the Disqus platform
-- Google Analytics support
-- Feedburner support
 - Auto-generated CSS support
 - Headers, footers, and in general everything that a well-structured html file has
 - xhtml validation, CSS validation, RSS validation by the w3c

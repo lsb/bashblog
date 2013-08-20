@@ -2,22 +2,16 @@
 
 # BashBlog, a simple blog system written in a single bash script
 # Author: Carles Fenollosa <carles.fenollosa@bsc.es>, 2011-2013
+# Author: lsb <hi@leebutterman.com>
 # With contributions from many others: 
 # https://github.com/carlesfe/bashblog/contributors
+# https://github.com/lsb/bashblog
 
 
-#########################################################################################
-#
 # README
 #
-#########################################################################################
-#
-# This is a very basic blog system
-#
-# Basically it asks the user to create a text file, then converts it into a .html file
-# and then rebuilds the index.html and feed.rss.
-#
-# Comments are supported via external service (Disqus).
+# This is a minimalist blog system, that asks the user to create a text file,
+# converts it into a .html file, and then rebuilds the index.html and feed.rss.
 #
 # This script is standalone, it doesn't require any other file to run
 #
@@ -36,11 +30,7 @@
 # into drafts/ and any other *.html file should be moved out of the way
 
 
-#########################################################################################
-#
 # LICENSE
-#
-#########################################################################################
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -56,12 +46,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#########################################################################################
-#
 # CHANGELOG
 #
-#########################################################################################
-#
+# 1.7      No more Disqus comments, Google Analytics support, and Feedburner support.
 # 1.6.3    Now supporting BSD date
 # 1.6.2    Simplified some functions and variables to avoid duplicated information
 # 1.6.1    'date' fix when hours are 1 digit.
@@ -79,11 +66,7 @@
 # 1.0      Read http://is.gd/Bkdoru
 
 
-#########################################################################################
-#
 # CODE
-#
-#########################################################################################
 #
 # As usual with bash scripts, scroll all the way to the bottom for the main routine
 # All other functions are declared above main.
@@ -101,7 +84,7 @@ global_config=".config"
 # by the 'global_config' file contents
 global_variables() {
     global_software_name="BashBlog"
-    global_software_version="1.6.3"
+    global_software_version="1.7"
 
     # Blog title
     global_title="My fancy blog"
@@ -120,19 +103,8 @@ global_variables() {
     # CC by-nc-nd is a good starting point, you can change this to "&copy;" for Copyright
     global_license="CC by-nc-nd"
 
-    # If you have a Google Analytics ID (UA-XXXXX), put it here.
-    # If left empty (i.e. "") Analytics will be disabled
-    global_analytics=""
-
-    # Leave this empty (i.e. "") if you don't want to use feedburner, 
-    # or change it to your own URL
-    global_feedburner=""
-
     # Change this to your username if you want to use twitter for comments
     global_twitter_username=""
-
-    # Change this to your disqus username to use disqus for comments
-    global_disqus_username=""
 
 
     # Blog generated files
@@ -166,62 +138,6 @@ global_variables() {
     date_locale="C"
 }
 
-# Prints the required google analytics code
-google_analytics() {
-    if [ "$global_analytics" == "" ]; then return; fi
-
-    echo "<script type=\"text/javascript\">
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', '"$global_analytics"']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-
-</script>"
-}
-
-# Prints the required code for disqus comments
-disqus_body() {
-    if [ "$global_disqus_username" == "" ]; then return; fi
-
-    echo '<div id="disqus_thread"></div>
-            <script type="text/javascript">
-            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-               var disqus_shortname = '\'$global_disqus_username\''; // required: replace example with your forum shortname
-
-            /* * * DONT EDIT BELOW THIS LINE * * */
-            (function() {
-            var dsq = document.createElement("script"); dsq.type = "text/javascript"; dsq.async = true;
-            dsq.src = "//" + disqus_shortname + ".disqus.com/embed.js";
-            (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(dsq);
-            })();
-            </script>
-            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>'
-}
-
-# Prints the required code for disqus in the footer
-disqus_footer() {
-    if [ "$global_disqus_username" == "" ]; then return; fi
-       echo '<script type="text/javascript">
-               /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-               var disqus_shortname = '\'$global_disqus_username\''; // required: replace example with your forum shortname
-
-               /* * * DONT EDIT BELOW THIS LINE * * */
-               (function () {
-               var s = document.createElement("script"); s.async = true;
-               s.type = "text/javascript";
-               s.src = "//" + disqus_shortname + ".disqus.com/count.js";
-               (document.getElementsByTagName("HEAD")[0] || document.getElementsByTagName("BODY")[0]).appendChild(s);
-               }());
-               </script>'
-}
-
 # Edit an existing, published .html file while keeping its original timestamp
 # Please note that this function does not automatically republish anything, as
 # it is usually called from 'main'.
@@ -242,11 +158,7 @@ edit() {
 twitter() {
     if [[ "$global_twitter_username" == "" ]]; then return; fi
 
-    if [[ "$global_disqus_username" == "" ]]; then
-        echo "<p id='twitter'>$template_comments&nbsp;"
-    else
-        echo "<p id='twitter'><a href=\"$1#disqus_thread\">$template_comments</a> &nbsp;"
-    fi  
+    echo "<p id='twitter'>$template_comments&nbsp;"
 
     echo "<a href=\"https://twitter.com/share\" class=\"twitter-share-button\" data-text=\"&lt;Type your comment here but please leave the URL so that other people can follow the comments&gt;\" data-url=\"$1\""
 
@@ -278,7 +190,6 @@ create_html_page() {
     # html, head
     cat ".header.html" > "$filename"
     echo "<title>$title</title>" >> "$filename"
-    google_analytics >> "$filename"
     echo "</head><body>" >> "$filename"
     # body divs
     echo '<div id="divbodyholder">' >> "$filename"
@@ -315,15 +226,10 @@ create_html_page() {
 
     echo '</div>' >> "$filename" # content
 
-    # Add disqus commments except for index and all_posts pages
-    if [[ ${filename%.*.*} !=  "index" && ${filename%.*.*} != "all_posts" ]]; then
-    	disqus_body >> "$filename"
-    fi
     # page footer
     cat .footer.html >> "$filename"
     # close divs
     echo '</div></div>' >> "$filename" # divbody and divbodyholder 
-    disqus_footer >> "$filename"
     echo '</body></html>' >> "$filename"
 }
 
@@ -467,11 +373,7 @@ rebuild_index() {
         n=$(( $n + 1 ))
     done
 
-    if [ "$global_feedburner" == "" ]; then
-        echo '<div id="all_posts"><a href="'$archive_index'">'$template_archive'</a> &mdash; <a href="'$blog_feed'">'$template_subscribe'</a></div>' >> "$contentfile"
-    else
-        echo '<div id="all_posts"><a href="'$archive_index'">'$template_archive'</a> &mdash; <a href="'$global_feedburner'">Subscribe</a></div>' >> "$contentfile"
-    fi
+    echo '<div id="all_posts"><a href="'$archive_index'">'$template_archive'</a> &mdash; <a href="'$blog_feed'">'$template_subscribe'</a></div>' >> "$contentfile"
 
     echo ""
 
@@ -551,11 +453,7 @@ create_includes() {
     echo '<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />' >> ".header.html"
     echo '<link rel="stylesheet" href="main.css" type="text/css" />' >> ".header.html"
     echo '<link rel="stylesheet" href="blog.css" type="text/css" />' >> ".header.html"
-    if [ "$global_feedburner" == "" ]; then
-        echo '<link rel="alternate" type="application/rss+xml" title="'$template_subscribe_browser_button'" href="'$blog_feed'" />' >> ".header.html"
-    else 
-        echo '<link rel="alternate" type="application/rss+xml" title="'$template_subscribe_browser_button'" href="'$global_feedburner'" />' >> ".header.html"
-    fi
+    echo '<link rel="alternate" type="application/rss+xml" title="'$template_subscribe_browser_button'" href="'$blog_feed'" />' >> ".header.html"
 
     protected_mail="$(echo "$global_email" | sed 's/@/\&#64;/g' | sed 's/\./\&#46;/g')"
     echo '<div id="footer">'$global_license '<a href="'$global_author_url'">'$global_author'</a> &mdash; <a href="mailto:'$protected_mail'">'$protected_mail'</a></div>' >> ".footer.html"

@@ -474,20 +474,18 @@ create_css() {
 
     # This is the CSS file from my main page. Any other person would need it to run the blog
     # so it's attached here for convenience.
-    if [ "$(whoami)" == "carlesfe" ] && [ ! -f "main.css" ]; then
-        ln -s "../style.css" "main.css" # XXX This is clearly machine-dependent, beware!
-    elif [ ! -f "main.css" ]; then
-        echo 'body{font-family:Georgia,"Times New Roman",Times,serif;margin:0;padding:0;background-color:#F3F3F3;}
-        #divbodyholder{padding:5px;background-color:#DDD;width:874px;margin:24px auto;}
-        #divbody{width:776px;border:solid 1px #ccc;background-color:#fff;padding:0px 48px 24px 48px;top:0;}
-        .headerholder{background-color:#f9f9f9;border-top:solid 1px #ccc;border-left:solid 1px #ccc;border-right:solid 1px #ccc;}
+    if [ ! -f "main.css" ]; then
+        echo 'body{font-family:Georgia,"Times New Roman",Times,serif;margin:0;padding:0;background-color:white}
+        #divbodyholder{padding:5px;width:874px;margin:24px auto;}
+        #divbody{width:776px;background-color:#fff;padding:0px 48px 24px 48px;top:0;}
+        .headerholder{background-color:#DEF}
         .header{width:800px;margin:0px auto;padding-top:24px;padding-bottom:8px;}
         .content{margin-bottom:45px;}
         .nomargin{margin:0;}
         .description{margin-top:10px;border-top:solid 1px #666;padding:10px 0;}
         h3{font-size:20pt;width:100%;font-weight:bold;margin-top:32px;margin-bottom:0;}
         .clear{clear:both;}
-        #footer{padding-top:10px;border-top:solid 1px #666;color:#333333;text-align:center;font-size:small;font-family:"Courier New","Courier",monospace;}
+        #footer{padding-top:10px;border-top:solid 1px #666;color:#333333;text-align:center;font-size:small;font-style:italic}
         a{text-decoration:none;color:#003366 !important;}
         a:visited{text-decoration:none;color:#336699 !important;}
         blockquote{background-color:#f9f9f9;border-left:solid 4px #e9e9e9;margin-left:12px;padding:12px 12px 12px 24px;}

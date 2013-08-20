@@ -152,11 +152,7 @@ twitter() {
 
     echo "<p id='twitter'>$template_comments&nbsp;"
 
-    echo "<a href=\"https://twitter.com/share\" class=\"twitter-share-button\" data-text=\"&lt;Type your comment here but please leave the URL so that other people can follow the comments&gt;\" data-url=\"$1\""
-
-    echo " data-via=\"$global_twitter_username\""
-
-    echo ">$template_twitter_button</a>	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"//platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>"
+    echo "<a href=\"https://twitter.com/share\" class=\"twitter-share-button\" data-text=\"&lt;Type your comment here but please leave the URL so that other people can follow the comments&gt;\" data-url=\"$1\" data-via=\"$global_twitter_username\" $template_twitter_button</a>"
     echo "</p>"
 }
 

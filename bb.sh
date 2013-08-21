@@ -433,7 +433,7 @@ make_rss() {
 
 # generate headers, footers, etc
 create_includes() {
-    echo '<h1 class="nomargin"><a class="ablack" href="'$global_url'">'$global_title'</a></h1>' > ".title.html"
+    echo '<h1 class="nomargin"><a href="'$global_url'">'$global_title'</a></h1>' > ".title.html"
     echo '<div id="description">'$global_description'</div>' >> ".title.html"
 
     echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' > ".header.html"

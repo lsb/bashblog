@@ -452,48 +452,6 @@ delete_includes() {
     rm ".title.html" ".footer.html" ".header.html"
 }
 
-# Create the css file from scratch
-create_css() {
-    # To avoid overwriting manual changes. However it is recommended that
-    # this function is modified if the user changes the blog.css file
-    if [ ! -f "blog.css" ]; then 
-        # blog.css directives will be loaded after main.css and thus will prevail
-        echo '#title{font-size: x-large;}
-        a.ablack{color:black !important;}
-        li{margin-bottom:8px;}
-        ul,ol{margin-left:24px;margin-right:24px;}
-        #all_posts{margin-top:24px;text-align:center;}
-        .subtitle{font-size:small;margin:12px 0px;}
-        .content p{margin-left:24px;margin-right:24px;}
-        h1{margin-bottom:12px !important;}
-        #description{font-size:large;margin-bottom:12px;}
-        h3{margin-top:42px;margin-bottom:8px;}
-        h4{margin-left:24px;margin-right:24px;}
-        #twitter{line-height:20px;vertical-align:top;text-align:right;font-style:italic;color:#333;margin-top:24px;font-size:14px;}' > blog.css
-    fi
-
-    # This is the CSS file from my main page. Any other person would need it to run the blog
-    # so it's attached here for convenience.
-    if [ ! -f "main.css" ]; then
-        echo 'body{font-family:Georgia,"Times New Roman",Times,serif;margin:0;padding:0;background-color:white}
-        #divbodyholder{padding:5px;width:874px;margin:24px auto;}
-        #divbody{width:776px;background-color:#fff;padding:0px 48px 24px 48px;top:0;}
-        .headerholder{background-color:#DEF}
-        .header{width:800px;margin:0px auto;padding-top:24px;padding-bottom:8px;}
-        .content{margin-bottom:45px;}
-        .nomargin{margin:0;}
-        .description{margin-top:10px;border-top:solid 1px #666;padding:10px 0;}
-        h3{font-size:20pt;width:100%;font-weight:bold;margin-top:32px;margin-bottom:0;}
-        .clear{clear:both;}
-        #footer{padding-top:10px;border-top:solid 1px #666;color:#333333;text-align:center;font-size:small;font-style:italic}
-        a{text-decoration:none;color:#003366 !important;}
-        a:visited{text-decoration:none;color:#336699 !important;}
-        blockquote{background-color:#f9f9f9;border-left:solid 4px #e9e9e9;margin-left:12px;padding:12px 12px 12px 24px;}
-        blockquote img{margin:12px 0px;}
-        blockquote iframe{margin:12px 0px;}' > main.css
-    fi
-}
-
 # Regenerates all the single post entries, keeping the post content but modifying
 # the title, html structure, etc
 rebuild_all_entries() {
@@ -545,7 +503,7 @@ reset() {
     echo "Are you sure you want to delete all blog entries? Please write \"Yes, I am!\" "
     read line
     if [ "$line" == "Yes, I am!" ]; then
-        rm .*.html *.html *.css *.rss &> /dev/null
+        rm .*.html *.html *.rss &> /dev/null
         echo
         echo "Deleted all posts, stylesheets and feeds."
         echo "Kept your old '.backup.tar.gz' just in case, please delete it manually if needed."
@@ -626,7 +584,6 @@ do_main() {
     fi
 
     create_includes
-    create_css
     if [ "$1" == "post" ]; then write_entry "$2"; fi
     if [ "$1" == "rebuild" ]; then rebuild_all_entries; fi
     if [ "$1" == "edit" ]; then edit "$2"; fi

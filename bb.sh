@@ -8,19 +8,15 @@
 # README
 #
 # Files that this script generates:
-#	- main.css (inherited from my web page) and blog.css (blog-specific stylesheet)
-#	- one .html for each post
-#	- index.html (regenerated each run)
-# 	- feed.rss (regenerated each run)
-#	- all_posts.html (regenerated each run)
-# 	- it also generates temporal files, which are removed afterwards
+#	- stylesheets/{main,blog}.css
+#	- compiled/{all_posts,index}.html
+#       - compiled/$(( get-url-title(p) )).html, p <- posts/*.html
+#       - compiled/feed.rss
+# 	- several mktemp files which it deletes
 #
-# It generates valid html and rss files, so keep care to use valid xhtml when editing a post
+# It generates valid html and rss files only if its non-validated input is valid.
 #
-# There are many loops which iterate on '*.html' so make sure that the only html files 
-# on this folder are the blog entries and index.html and all_posts.html. Drafts must go
-# into drafts/ and any other *.html file should be moved out of the way
-
+# Drafts go into drafts/, and posts go into posts/. This script compiles an entire list of posts chronologically into a "blog".
 
 # LICENSE
 #
@@ -123,8 +119,6 @@ global_variables() {
     # "Tweet" (used as twitter text button for posting to twitter)
     template_twitter_button="Tweet"
 
-    template_twitter_comment="&lt;Type your comment here but please leave the URL so that other people can follow the comments&gt;"
-    
     # The locale to use for the dates displayed on screen (not for the timestamps)
     date_format="%B %d, %Y"
     date_locale="C"
@@ -150,16 +144,14 @@ edit() {
 twitter() {
     if [[ "$global_twitter_username" == "" ]]; then return; fi
 
-    echo "<p id='twitter'>$template_comments&nbsp;"
-
-    echo "<a href=\"https://twitter.com/share\" class=\"twitter-share-button\" data-text=\"&lt;Type your comment here but please leave the URL so that other people can follow the comments&gt;\" data-url=\"$1\" data-via=\"$global_twitter_username\">$template_twitter_button</a>"
-    echo "</p>"
+    echo "<p id='twitter'>$template_comments&nbsp;<a href='https://twitter.com/share' class='twitter-share-button'>$template_twitter_button</a></p>"
 }
 
 # Adds all the bells and whistles to format the html page
 # Every blog post is marked with a <!-- entry begin --> and <!-- entry end -->
 # which is parsed afterwards in the other functions. There is also a marker
 # <!-- text begin --> to determine just the beginning of the text body of the post
+# FIXME: stop parsing comments
 #
 # $1     a file with the body of the content
 # $2     the output file

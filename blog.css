@@ -1,0 +1,13 @@
+a.ablack{color:black !important;}
+#title h1 a {font-size: 0.25in;color: #69c !important;font-style:italic}
+#description{font-size:0.2in;color: #69c;font-style:italic}
+#title {text-align: center}
+li{margin-bottom:8px;}
+ul,ol{margin-left:24px;margin-right:24px;}
+#all_posts{margin-top:24px;text-align:center;}
+.subtitle{font-size:small;margin:12px 0px;}
+.content p{margin-left:24px;margin-right:24px;}
+h1{}
+h3{margin-top:42px;margin-bottom:8px;}
+h4{margin-left:24px;margin-right:24px;}
+#twitter{line-height:20px;vertical-align:top;text-align:right;font-style:italic;color:#333;margin-top:24px;font-size:14px;}

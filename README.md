@@ -10,8 +10,6 @@ The original has been highly modified from [the initial blog post](http://mmb.pc
 Usage
 -----
 
-You only need SSH access to a server which allows its users to run shell scripts.
-
 Copy bb.sh into a public folder of yours and run it:
 
     ./bb.sh
